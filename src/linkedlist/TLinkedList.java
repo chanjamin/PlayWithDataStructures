@@ -33,26 +33,22 @@ public class TLinkedList<E>{
     }
 
     public TLinkedList() {
-        head=null;
+        head=new Node(null,null);
         size=0;
     }
 
     public void addFirst(E e){
-        head=new Node(e,head);
+        add(0,e);
     }
 
     public void add(int index,E e){
         if(index<0||index>size)
             throw new IllegalArgumentException("索引异常");
-        if(index==0)
-            addFirst(e);
-        else {
             Node prev=head;
-            for (int i = 0; i <index-1; i++) {
+            for (int i = 0; i <index; i++) {
                 prev=prev.next;
             }
             prev.next=new Node(e,prev.next);
-        }
     }
 
     public void addLast(E e) {
