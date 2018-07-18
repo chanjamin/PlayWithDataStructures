@@ -54,4 +54,42 @@ public class TLinkedList<E>{
     public void addLast(E e) {
         add(size,e);
     }
+    
+    public void set(int index,E e){
+        if(index<0||index>size)
+            throw new IllegalArgumentException("索引异常");
+        Node cur=head.next;
+        for (int i = 0; i < index; i++) {
+            cur.e=e;
+        }
+    }
+
+    public boolean contains(E e ){
+        Node cur=head.next;
+        while (cur.next!=null){
+            if(cur.e.equals(e)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("LinkedList ");
+        builder.append("size=").append(getSize()).append("; {");
+//        Node cur=head.next;
+//        while (cur.next!=null){
+//            builder.append(cur).append(",");
+//        }
+        for (Node cur=head.next;cur!=null;cur=cur.next)
+            builder.append(cur+"->");
+        builder.append("null");
+     return    builder.append("}").toString();
+    }
 }
