@@ -49,27 +49,27 @@ public class DynamicArray<M> {
     }
 
 
-    void addLast(M m){
+    public void addLast(M m){
         add(size,m);
     }
 
-    void addFirst(M e){
+    public void addFirst(M e){
         add(0,e);
     }
 
-    Object get(int index){
+    public M get(int index){
         if(index < 0 || index >= size)
             throw new IllegalArgumentException("Get failed. Index is illegal.");
         return data[index];
     }
 
-    void set(int index,M m){
+    public void set(int index,M m){
         if(index < 0 || index >= size)
             throw new IllegalArgumentException("Set failed. Index is illegal.");
         data[index]=m;
     }
 
-    boolean contain(M o){
+    public boolean contain(M o){
         for (Object object:
              data) {
             if(object.equals(o))
@@ -78,7 +78,7 @@ public class DynamicArray<M> {
         return false;
     }
 
-    int find(M o){
+    public int find(M o){
         for(int i = 0; i <size ; i++) {
             if (data[i].equals(o));
             return i;
@@ -86,7 +86,7 @@ public class DynamicArray<M> {
         return -1;
     }
 
-    M remove(int index){
+    public M remove(int index){
         if(index < 0 || index >= size)
             throw new IllegalArgumentException("Remove failed. Index is illegal.");
         {

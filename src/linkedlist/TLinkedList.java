@@ -55,6 +55,16 @@ public class TLinkedList<E>{
     public void addLast(E e) {
         add(size,e);
     }
+
+    public E removeFirst(){
+        Node ret = this.head;
+        head=head.next;
+        return ret.e;
+    }
+
+    public E getFirst(){
+        return head.e;
+    }
     
     public void set(int index,E e){
         if(index<0||index>size)
