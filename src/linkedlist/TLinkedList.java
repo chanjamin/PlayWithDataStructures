@@ -49,6 +49,7 @@ public class TLinkedList<E>{
                 prev=prev.next;
             }
             prev.next=new Node(e,prev.next);
+            size++;
     }
 
     public void addLast(E e) {
@@ -78,6 +79,21 @@ public class TLinkedList<E>{
         return size;
     }
 
+    public E remove(int index){
+        if(index < 0 || index >= size)
+            throw new IllegalArgumentException("Remove failed. Index is illegal.");
+        //前一节点指向移除元素的next,元素=Null
+        Node prev=head;
+        for (int i = 0; i <index; i++) {
+           //prev是要移除节点前节点
+            prev=prev.next;
+        }
+        //这句话的意思是prev.next的引用传递给cur,cur是局部变量,不赋值null也会被gc
+        Node cur = prev.next;
+        prev.next=prev.next.next;
+        size--;
+        return cur.e;
+    }
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
