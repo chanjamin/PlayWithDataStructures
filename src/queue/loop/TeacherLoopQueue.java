@@ -91,31 +91,7 @@ public class TeacherLoopQueue<E> implements Queue<E> {
     }
 
 
-    public static void main(String[] args){
 
-        TeacherLoopQueue<Integer> queue = new TeacherLoopQueue<>();
-//        for(int i = 0 ; i < 100000 ; i ++){
-//            queue.enqueue(i);
-//            System.out.println(queue);
 
-//            if(i % 2 == 0){
-//                queue.dequeue();
-//                System.out.println(queue);
-//            }
-//        }
-        System.out.println(testQ(queue,100000));
-        ArrayQueue<Integer> integerArrayQueue = new ArrayQueue<>(100000);
-        System.out.println(testQ(integerArrayQueue,100000));
-    }
 
-    private static double testQ(Queue queue,int count){
-        long time = System.nanoTime();
-        for (int i = 0; i < count; i++) {
-            queue.enqueue(i);
-        }
-        for (int i = 0; i < count; i++) {
-            queue.dequeue();
-        }
-        return  (System.nanoTime()-time)/1000000000.0;
-    }
 }
