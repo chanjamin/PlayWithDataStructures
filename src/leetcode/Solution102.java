@@ -1,9 +1,8 @@
-package queue.loop;
+package leetcode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 import javafx.util.Pair;
 
@@ -21,7 +20,7 @@ import javafx.util.Pair;
  * Leetcode 102. Binary Tree Level Order Traversal
  * https://leetcode.com/problems/binary-tree-level-order-traversal/description/
  */
-class Solution {
+class Solution102 {
 
     /// Definition for a binary tree node.
     private class TreeNode {
@@ -40,7 +39,7 @@ class Solution {
         E getFront();
     }
 
-    private class LoopQueue<E> implements Solution.Queue<E> {
+    private class LoopQueue<E> implements Solution102.Queue<E> {
 
         private E[] data;
         private int front, tail;
