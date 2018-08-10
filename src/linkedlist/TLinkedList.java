@@ -63,20 +63,6 @@ public class TLinkedList<E>{
         return remove(0);
     }
 
-    public E remove(int index){
-        if(index < 0 || index >= size)
-            throw new IllegalArgumentException("Remove failed. Index is illegal.");
-        Node prev = head;
-        for(int i = 0 ; i < index ; i ++)
-            prev = prev.next;
-
-        Node retNode = prev.next;
-        prev.next = retNode.next;
-        retNode.next = null;
-        size --;
-
-        return retNode.e;
-    }
 
     public E getFirst(){
         return head.e;
