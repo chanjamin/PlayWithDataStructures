@@ -28,6 +28,7 @@ public class Main {
             bothWayLinkedList.add(i,i);
         }
         bothWayLinkedList.remove(2);
+        bothWayLinkedList.remove(4);
         System.out.println(bothWayLinkedList);
     }
 }

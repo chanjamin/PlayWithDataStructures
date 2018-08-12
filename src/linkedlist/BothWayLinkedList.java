@@ -1,7 +1,7 @@
 package linkedlist;
 
 public class BothWayLinkedList<E> {
-    private Node dumbHead;
+    private Node dumbHead=new Node(-1,null,null);
     private Node tail;
     private int size;
 
@@ -9,7 +9,7 @@ public class BothWayLinkedList<E> {
         private E element;
         private Node prev, next;
 
-        public Node(E element, Node prev, Node next) {
+        private Node(E element, Node prev, Node next) {
             this.element = element;
             this.prev = prev;
             this.next = next;
@@ -23,7 +23,9 @@ public class BothWayLinkedList<E> {
         for (int i = 0; i < index; i++) {
             prev = prev.next;
         }
-        prev.next = new Node(e, prev, prev.next);
+        Node node = new Node(e, prev, prev.next);
+        tail=node;
+        prev.next = node;
         size++;
     }
 
@@ -61,7 +63,7 @@ public class BothWayLinkedList<E> {
 //            builder.append(cur).append(",");
 //        }
         for (Node cur=dumbHead.next;cur!=null;cur=cur.next)
-            builder.append(cur+"->");
+            builder.append(cur.element+"->");
         builder.append("null");
         return    builder.append("}").toString();
     }
