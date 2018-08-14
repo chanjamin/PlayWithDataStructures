@@ -1,6 +1,5 @@
 package leetcode;
 
-import org.junit.Test;
 
 public  class Solution203 {
     class ListNode {
@@ -74,7 +73,6 @@ public  class Solution203 {
         return null;
     }
 
-    @Test
     public void test() {
         ListNode listNode=new ListNode(1,new ListNode(2,new ListNode(3,new ListNode(4,new ListNode(5,new ListNode(6,null))))));
         System.out.println(        this.removeElements(listNode,6));

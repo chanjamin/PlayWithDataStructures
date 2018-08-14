@@ -1,11 +1,11 @@
 package queue;
 
-import org.junit.Test;
+//import org.junit.Test;
 import queue.loop.TeacherLoopQueue;
 
 public class TestClass {
 
-    @Test
+//    @Test
     public void testLinkedListStack(){
         Queue<Integer> queue = new LinkedListQueue<>();
         for(int i = 0 ; i < 20 ; i ++){
@@ -19,7 +19,7 @@ public class TestClass {
 
     }
 
-    @Test
+//    @Test
     public void testArrayQueue(){
         ArrayQueue<Integer> queue = new ArrayQueue<Integer>();
         for(int i = 0 ; i < 10 ; i ++){
@@ -32,7 +32,7 @@ public class TestClass {
         }
     }
 
-    @Test
+//    @Test
     public void testPerformance(){
 
         TeacherLoopQueue<Integer> queue = new TeacherLoopQueue<>();

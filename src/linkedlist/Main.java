@@ -30,5 +30,12 @@ public class Main {
         bothWayLinkedList.remove(2);
         bothWayLinkedList.remove(4);
         System.out.println(bothWayLinkedList);
+
+        LinkedListR<Integer> list = new LinkedListR<>();
+        for (int i = 0; i < 7; i++) {
+            list.add(i,i);
+        }
+        list.remove(2);
+        System.out.println(list);
     }
 }
