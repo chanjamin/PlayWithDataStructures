@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.Stack;
+
 public class BTS<E extends Comparable<E>> {
     private int size;
     private Node root;
@@ -60,6 +62,23 @@ public class BTS<E extends Comparable<E>> {
         preTraverse(root);
     }
 
+    /**
+     * 非递归先序遍历,栈
+     */
+    private void preTraverseNR(){
+        if (root==null)
+            return;
+        Stack<Node<E>> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            Node<E> cur = stack.pop();
+            System.out.println(cur);
+            if(cur.right!=null)
+                stack.push(cur.right);
+            if (cur.left!=null)
+                stack.push(cur.left);
+        }
+    }
     private void preTraverse(Node root) {
         if(root==null)
             return;
