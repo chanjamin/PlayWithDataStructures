@@ -46,12 +46,11 @@ public class BTS<E extends Comparable<E>> {
     private boolean contains(Node node, E e) {
         if(node==null)
             return false;
-        else if(node.e.equals(e))
+        else if(e.compareTo((E)node.e)==0)
             return true;
-        else if(node.left!=null)
+        else if(e.compareTo((E) node.e)<0)
             return contains(node.left,e);
-        else if(node.right!=null)
+        else
             return contains(node.right,e);
-        return false;
     }
 }
