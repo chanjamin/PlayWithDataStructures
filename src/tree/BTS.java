@@ -4,7 +4,7 @@ public class BTS<E extends Comparable<E>> {
     private int size;
     private Node root;
 
-    private class Node<E> {
+    public class Node<E> {
         private E e;
         private Node left;
         private Node right;
@@ -24,24 +24,19 @@ public class BTS<E extends Comparable<E>> {
     }
 
     public void add(E e) {
-        if (root == null)
-            this.root = new Node(e, null, null);
-        else add(root, e);
+        add(root,e);
         size++;
     }
 
-    private void add(Node node, E e) {
-        if (e.equals(node.e))
-            return;
-        else if (e.compareTo((E) node.e) < 0 && node.left == null) {
-            node.left = new Node(e, null, null);
-            return;
-        } else if (e.compareTo((E) node.e) > 0 && node.right == null) {
-            node.right = new Node(e, null, null);
-            return;
-        } else if(e.compareTo((E) node.e)<0)
-                add(node.left,e);
-        else
-            add(node.right,e);
+    private Node add(Node node, E e) {
+        //处理头节点
+        if(node==null)
+            return new Node(e,null,null);
+        if(e.compareTo((E) node.e)<0)
+            node.left=new Node(e,null,null);
+        else if(e.compareTo((E)node.e)>0)
+            node.right=new Node(e,null,null);
+        return node;
     }
+
 }
