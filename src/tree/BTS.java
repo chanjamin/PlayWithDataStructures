@@ -19,38 +19,76 @@ public class BTS<E extends Comparable<E>> {
     public int getSize() {
         return size;
     }
-    public boolean isEmpty(){
-        return size==0;
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     public void add(E e) {
-        add(root,e);
-        size++;
+        root = add(root, e);
     }
 
     private Node add(Node node, E e) {
         //处理头节点
-        if(node==null)
-            return new Node(e,null,null);
-        if(e.compareTo((E) node.e)<0)
-            node.left=new Node(e,null,null);
-        else if(e.compareTo((E)node.e)>0)
-            node.right=new Node(e,null,null);
+        if (node == null) {
+            size++;
+            return new Node(e, null, null);
+        }
+        if (e.compareTo((E) node.e) < 0)
+            node.left = add(node.left, e);
+        else if (e.compareTo((E) node.e) > 0)
+            node.right = add(node.right,e);
         return node;
     }
 
-    public boolean contains(E e){
-        return contains(root,e);
+    public boolean contains(E e) {
+        return contains(root, e);
     }
 
     private boolean contains(Node node, E e) {
-        if(node==null)
+        if (node == null)
             return false;
-        else if(e.compareTo((E)node.e)==0)
+        else if (e.compareTo((E) node.e) == 0)
             return true;
-        else if(e.compareTo((E) node.e)<0)
-            return contains(node.left,e);
+        else if (e.compareTo((E) node.e) < 0)
+            return contains(node.left, e);
         else
-            return contains(node.right,e);
+            return contains(node.right, e);
+    }
+
+    public void preTraverse(){
+        preTraverse(root);
+    }
+
+    private void preTraverse(Node root) {
+        if(root==null)
+            return;
+        System.out.println(root.e);
+        preTraverse(root.left);
+        preTraverse(root.right);
+    }
+
+    public void midTraverse(){
+        midTraverse(root);
+    }
+
+    private void midTraverse(Node root) {
+        if(root==null)
+            return;
+        midTraverse(root.left);
+        System.out.println(root.e);
+        midTraverse(root.right);
+    }
+
+    public void backTraverse(){
+        backTraverse(root);
+    }
+
+    private void backTraverse(Node root) {
+        if(root==null)
+            return;
+        midTraverse(root.left);
+        midTraverse(root.right);
+        System.out.println(root.e);
     }
 }
