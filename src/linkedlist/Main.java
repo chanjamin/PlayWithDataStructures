@@ -1,5 +1,8 @@
 package linkedlist;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Main {
     public static void main(String[] args) {
 //        MLinkedList<Integer> list = new MLinkedList<>();
@@ -37,5 +40,6 @@ public class Main {
         }
         list.remove(2);
         System.out.println(list);
+
     }
 }
