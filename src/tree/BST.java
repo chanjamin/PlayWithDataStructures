@@ -46,14 +46,15 @@ public class BST<E extends Comparable<E>> {
     }
 
     public boolean contains(E e) {
-        return contains(root, e);
+        Node node = contains(root, e);
+        return node!=null&&node.e==e;
     }
 
-    private boolean contains(Node node, E e) {
+    private Node contains(Node node, E e) {
         if (node == null)
-            return false;
+            return null;
         else if (e.compareTo((E) node.e) == 0)
-            return true;
+            return node;
         else if (e.compareTo((E) node.e) < 0)
             return contains(node.left, e);
         else
@@ -192,5 +193,81 @@ public class BST<E extends Comparable<E>> {
         }
         node.right=removeMax(node.right);
         return node;
+    }
+
+    public void remove(E e){
+        remove(root,e);
+    }
+
+    private Node remove(Node node, E e) {
+        if(node==null)
+            return node;
+
+        if(e.compareTo((E) node.e)<0){
+            node.left= remove(node.left,e);
+            return node;
+        }
+        else if(e.compareTo((E) node.e)>0){
+            node.right= remove(node.right,e);
+            return node;
+        }
+        else {
+            //左空
+            if (node.left==null){
+                Node rightNode = node.right;
+                node.right = null;
+                size --;
+                return rightNode;
+            }
+            //右空
+            if(node.right==null){
+                Node leftNode = node.left;
+                node.left = null;
+                size --;
+                return leftNode;
+            }
+            //都不为空
+            Node successor = minimum(node.right);
+            successor.right=removeMin(node.right);
+            successor.left=node.left;
+            return successor;
+        }
+    }
+
+    /**
+     * 和e最接近的小于e的元素
+     *    if thisNode.e> e return leftNode.maxNode
+     *      else if eq return thisNode.e
+     * else return null;
+     * And explain in program way
+     * @param e
+     * @return
+     */
+    public E floor(E e){
+        Node minNode = floor(root, e);
+        return minNode==null?null: (E) minNode.e;
+    }
+
+    /**
+     * return left tree.right leaf which root 轻微小于 e
+     * @param node
+     * @param e
+     * @return
+     */
+    private Node floor(Node node, E e) {
+        if(node==null)
+            return null;
+        int compare = e.compareTo((E) node.e);
+        if(compare==0)
+            return node;
+        else if(compare<0)//当前节点>查找值
+            return floor(node.left,e);
+        else{
+            Node rightMin = floor(node.right, e);
+            if(rightMin==null)
+                return node;
+            else
+                return rightMin;
+        }
     }
 }
