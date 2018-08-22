@@ -5,43 +5,57 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class BST<E extends Comparable<E>> {
-    private int size;
     private Node root;
 
     public class Node<E> {
         private E e;
         private Node left;
         private Node right;
-
+        private int size;
+        private int depth;
+        private int count;
         public Node(E e, Node left, Node right) {
             this.e = e;
             this.left = left;
             this.right = right;
         }
+
+        public Node(E e, Node left, Node right, int size, int depth, int count) {
+            this.e = e;
+            this.left = left;
+            this.right = right;
+            this.size = size;
+            this.depth = depth;
+            this.count = count;
+        }
     }
 
     public int getSize() {
-        return size;
+        return root.size;
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return root.size == 0;
     }
 
     public void add(E e) {
-        root = add(root, e);
+        root = add(root, e,0);
     }
 
-    private Node add(Node node, E e) {
-        //处理头节点
+    private Node add(Node node, E e,int depth) {
+        //没有此节点
         if (node == null) {
-            size++;
-            return new Node(e, null, null);
+            return new Node(e, null, null,1,depth,1);
+        }
+        ++node.size;
+        if(node.e.equals(e)) {
+            ++node.count;
+            return node;
         }
         if (e.compareTo((E) node.e) < 0)
-            node.left = add(node.left, e);
+            node.left = add(node.left, e,node.left!=null?node.depth:0);
         else if (e.compareTo((E) node.e) > 0)
-            node.right = add(node.right,e);
+            node.right = add(node.right,e,node.right!=null?node.depth:0);
         return node;
     }
 
@@ -97,12 +111,12 @@ public class BST<E extends Comparable<E>> {
                 stack.push(cur.left);
         }
     }
-    private void preTraverse(Node root) {
-        if(root==null)
+    private void preTraverse(Node node) {
+        if(node==null)
             return;
-        System.out.println(root.e);
-        preTraverse(root.left);
-        preTraverse(root.right);
+        System.out.println(node.e+"\tcount:"+node.count+" depth:"+node.depth+" size:"+node.size);
+        preTraverse(node.left);
+        preTraverse(node.right);
     }
 
     public void midTraverse(){
@@ -133,7 +147,7 @@ public class BST<E extends Comparable<E>> {
      * @return 寻找二分搜索树的最小元素
      */
     public E minimum(){
-        if(size == 0)
+        if(root.size == 0)
             throw new IllegalArgumentException("BST is empty");
         return (E) minimum(root).e;
     }
@@ -148,7 +162,7 @@ public class BST<E extends Comparable<E>> {
      * @return 最大元素
      */
     public E maximum(){
-        if(size == 0)
+        if(root.size == 0)
             throw new IllegalArgumentException("BST is empty");
         return (E) maximum(root).e;
     }
@@ -166,11 +180,14 @@ public class BST<E extends Comparable<E>> {
     }
 
     private Node removeMin(Node node) {
+            node.size--;
+            node.depth--;
         //如果左节点为空,此节点最小,返回右节点(无论是否为空)用于拼接
         if(node.left==null){
             Node ret = node.right;
             node.right=null;
-            size--;
+            if(ret!=null)
+                ret.count--;
             return ret;
         }
         //如果没有node.left=,变成空树
@@ -185,10 +202,13 @@ public class BST<E extends Comparable<E>> {
     }
 
     private Node removeMax(Node node) {
+        node.size--;
+        node.depth--;
         if(node.right==null){
             Node ret = node.left;
             node.left=null;
-            size--;
+            if(ret!=null)
+                ret.count--;
             return ret;
         }
         node.right=removeMax(node.right);
@@ -216,14 +236,14 @@ public class BST<E extends Comparable<E>> {
             if (node.left==null){
                 Node rightNode = node.right;
                 node.right = null;
-                size --;
+                node.size --;
                 return rightNode;
             }
             //右空
             if(node.right==null){
                 Node leftNode = node.left;
                 node.left = null;
-                size --;
+                node.size --;
                 return leftNode;
             }
             //都不为空
@@ -269,5 +289,26 @@ public class BST<E extends Comparable<E>> {
             else
                 return rightMin;
         }
+    }
+
+    public E ceil(E e){
+        Node ceilNode = ceil(root, e);
+        return ceilNode==null?null: (E) ceilNode.e;
+    }
+
+    private Node ceil(Node node, E e) {
+        if (node == null)
+            return null;
+
+        int cmp = e.compareTo((E) node.e);
+        if (cmp == 0)
+            return node;
+        if (cmp > 0)
+            return ceil(node.right, e);
+        Node leftNode = ceil(node.left, e);
+        if (leftNode != null)
+            return leftNode;
+        else
+            return node;
     }
 }

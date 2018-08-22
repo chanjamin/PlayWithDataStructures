@@ -6,12 +6,12 @@ import java.util.Random;
 public class TestClass {
     public static void main(String[] args) {
         BST<Integer> bts = new BST<>();
-        int[] ints={5,3,6,8,4,2};
+        int[] ints={5,3,3,6,8,4,2};
         for (int i:ints
              ) {
             bts.add(i);
         }
-//        bts.preTraverse();
+        bts.preTraverse();
 //        bts.midTraverse();
 //        bts.backTraverse();
 //        bts.levelTraverse();
@@ -35,7 +35,7 @@ public class TestClass {
 //            if(nums.get(i - 1) > nums.get(i))
 //                throw new IllegalArgumentException("Error!");
 //        System.out.println("removeMin test completed.");
-        Integer floor = bts.floor(7);
-        System.out.println(floor);
+//        Integer floor = bts.floor(7);
+//        System.out.println(floor);
     }
 }
