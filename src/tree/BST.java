@@ -9,6 +9,7 @@ public class BST<E extends Comparable<E>> {
         private E e;
         private Node left;
         private Node right;
+        private Node father;
         private int size;
         private int depth;
         private int count;
@@ -19,13 +20,14 @@ public class BST<E extends Comparable<E>> {
             this.right = right;
         }
 
-        public Node(E e, Node left, Node right, int size, int depth, int count) {
+        public Node(E e, Node left, Node right, int size, int depth, int count,Node father) {
             this.e = e;
             this.left = left;
             this.right = right;
             this.size = size;
             this.depth = depth;
             this.count = count;
+            this.father=father;
         }
     }
 
@@ -38,23 +40,21 @@ public class BST<E extends Comparable<E>> {
     }
 
     public void add(E e) {
-        root = add(root, e, 0);
+        root = add(root, e, 0,null);
     }
 
-    private Node add(Node node, E e, int depth) {
+    private Node add(Node node, E e, int depth,Node father) {
         //没有此节点
         if (node == null) {
-            return new Node(e, null, null, 1, depth, 1);
+            return new Node(e, null, null, 1, depth, 1,father);
         }
         ++node.size;
-        if (node.e.equals(e)) {
-            ++node.count;
-            return node;
-        }
-        if (e.compareTo((E) node.e) < 0)
-            node.left = add(node.left, e, ++depth);
+        if (e.compareTo((E) node.e) <0)
+            node.left = add(node.left, e, ++depth,node);
         else if (e.compareTo((E) node.e) > 0)
-            node.right = add(node.right, e, ++depth);
+            node.right = add(node.right, e, ++depth,node);
+//        else
+//            node.count++;
         return node;
     }
 
@@ -74,20 +74,42 @@ public class BST<E extends Comparable<E>> {
             return contains(node.right, e);
     }
 
-    public E select(int index){
-        if(index<0||index>root.size)
+    public E select(int rank){
+        if(rank<0||rank>root.size)
             return null;
-        return (E) midTraverseToList(root).get(index).e;
+        return (E) select(root,rank).e;
     }
-//    private Node select(Node node, int index, int fIndex) {
-//        if (node == null)
-//            return null;
-//        select(node.left,++index,fIndex);
-//        if(index==fIndex)
-//            return node;
-//        select(node.right,++index,fIndex);
-//        return node;
-//    }
+
+    private Node select(Node node,int rank){
+        //node.left.size==rank  说明node就是第rank个元素,不是size-1是因为任何叶子节点size=1,node就是size-1个元素
+        if(node==null)
+            return null;
+        int leftSize = node.left==null?0:node.left.size;
+        if(leftSize>rank)
+            return select(node.left,rank);
+        else if(leftSize<rank)//这个点在右子树中
+            return select(node.right,rank-leftSize-node.count);
+        return node;
+    }
+
+    public int rank(E e){
+        return rank(root,e);
+    }
+
+    private int rank(Node node, E e) {
+        if (node == null) {
+            return 0;
+        }
+        int cmp = e.compareTo((E) node.e);
+        int leftSize = node.left == null ? 0 : node.left.size;
+        if(cmp>0){
+            return leftSize+1+rank(node.right,e);
+        }
+        if(cmp<0){
+            return rank(node.left,e);
+        }
+        return leftSize+1;
+    }
 
     public void levelTraverse() {
         if (root == null)
@@ -138,12 +160,12 @@ public class BST<E extends Comparable<E>> {
         midTraverse(root);
     }
 
-    private void midTraverse(Node root) {
-        if (root == null)
+    private void midTraverse(Node node) {
+        if (node == null)
             return;
-        midTraverse(root.left);
-        System.out.println(root.e);
-        midTraverse(root.right);
+        midTraverse(node.left);
+        System.out.printf(node.e+"\tcount:%d,depth:%d,size:%d,father:%s\n",node.count,node.depth,node.size,node.father==null?"null":node.father.e);
+        midTraverse(node.right);
     }
 
     private List<Node> midTraverseToList(Node root) {
