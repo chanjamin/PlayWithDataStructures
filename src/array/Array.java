@@ -54,13 +54,13 @@ public class Array<M> {
         return data[index];
     }
 
-    void set(int index,M m){
+    public void set(int index,M m){
         if(index < 0 || index >= size)
             throw new IllegalArgumentException("Set failed. Index is illegal.");
         data[index]=m;
     }
 
-    boolean contain(M o){
+    public boolean contain(M o){
         for (Object object:
              data) {
             if(object.equals(o))
@@ -69,7 +69,7 @@ public class Array<M> {
         return false;
     }
 
-    int find(M o){
+    public int find(M o){
         for(int i = 0; i <size ; i++) {
             if (data[i].equals(o));
             return i;
@@ -102,7 +102,7 @@ public class Array<M> {
             remove(index);
     }
 
-    M remove(int index){
+    public M remove(int index){
         if(index>size)
             return null;
         else

@@ -9,18 +9,23 @@ public class DynamicArray<M> {
         size=0;
     }
 
+    public DynamicArray(M[] data) {
+        this.data = data;
+        this.size =data.length;
+    }
+
     public DynamicArray(){
         this(10);
     }
 
-    int getCapacity(){
+    public int getCapacity(){
         return data.length;
     }
-    int getSize(){
+    public int getSize(){
         return size;
     }
 
-    boolean isEmpty(){
+   public boolean isEmpty(){
         return size==0;
     }
 
@@ -95,7 +100,7 @@ public class DynamicArray<M> {
                 data[i-1]=data[i];
             }
             size--;
-            if(data.length/size>=4)
+            if(size!=0&&data.length/size>=4)
                 resize(data.length/2);
             return temp;
         }
@@ -134,4 +139,9 @@ public class DynamicArray<M> {
     }
 
 
+    public void swap(int i, int k) {
+        M t = data[i];
+        data[i]=data[k];
+        data[k]=t;
+    }
 }
