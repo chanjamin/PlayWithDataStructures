@@ -10,6 +10,11 @@ public class UnionFind2 implements UF {
         }
     }
 
+    private int findRoot(int p){
+        while (parent[p]!=p)
+            p=parent[p];
+        return p;
+    }
     @Override
     public int getSize() {
         return parent.length;
@@ -18,20 +23,16 @@ public class UnionFind2 implements UF {
     //根节点自己指向自己，否则不是根
     @Override
     public boolean isConnected(int p, int q) {
-        while (parent[p]!=p)
-            p=parent[p];
-        while (parent[q]!=q)
-            q=parent[q];
-        return q==p;
+        int rootP = findRoot(p);
+        int rootQ=findRoot(q);
+        return rootP==rootQ;
     }
 
     @Override
     public void union(int p, int q) {
-        while (parent[p]!=p)
-            p=parent[p];
-        while (parent[q]!=q)
-            q=parent[q];
-        if(p!=q)
+        int rootP = findRoot(p);
+        int rootQ=findRoot(q);
+        if(rootP!=rootQ)
             parent[p]=q;
     }
 }
