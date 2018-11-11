@@ -45,7 +45,7 @@ public class Trie {
         }
     }
 
-    public boolean contains(String word){
+    public boolean contains(String word) {
         Node cur = root;
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
@@ -61,19 +61,25 @@ public class Trie {
         return false;
     }
 
+    public void delete(String word) {
+        if (contains(word))
+            delete(root, word, 0);
+    }
+
+    private void delete(Node node, String word, int index) {
+    }
+
     private void addR(Node node, String word, int index) {
         if (!(index > word.length())) {
             if (node.next.get(word.charAt(index)) == null) {
                 Node newNode = new Node();
                 node.next.put(word.charAt(index), newNode);
-                addR(newNode,word,++index);
-            }
-            else {
-                if(index==word.length()-1&&node.next.get(word.charAt(index)).isWord==true){
+                addR(newNode, word, ++index);
+            } else {
+                if (index == word.length() - 1 && node.next.get(word.charAt(index)).isWord == true) {
                     size++;
-                }
-                else
-                    addR(node.next.get(word.charAt(index)),word,++index);
+                } else
+                    addR(node.next.get(word.charAt(index)), word, ++index);
             }
         }
     }
