@@ -1,12 +1,15 @@
 package unionfind;
 
-public class UnionFind2 implements UF {
+public class UnionFind3 implements UF {
     private int[] parent;
+    private int[] size;//每个节点的大小
 
-    public UnionFind2(int size) {
+    public UnionFind3(int size) {
         parent=new int[size];
+        this.size=new int[size];
         for (int i = 0; i < size; i++) {
             parent[i]=i;
+            this.size[i]=1;
         }
     }
 
@@ -33,6 +36,14 @@ public class UnionFind2 implements UF {
         int rootP = findRoot(p);
         int rootQ=findRoot(q);
         if(rootP!=rootQ)
-            parent[rootP]=rootQ;
+        {
+            if(size[rootP]<size[rootQ]){
+                parent[rootP]=rootQ;
+                size[rootQ]+=size[rootP];
+            }else {
+                parent[rootQ]=rootP;
+                size[rootP]+=rootQ;
+            }
+        }
     }
 }
